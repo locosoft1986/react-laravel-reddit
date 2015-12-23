@@ -15,6 +15,19 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/login', 'AuthenticateController@getLogin');
+
+Route::get('/register', 'AuthenticateController@getRegister');
+
+
+/*
+ * API Routes
+ */
+
+Route::post('/api/v1/checkIfEmailIsInUse', 'APIController@checkIfEmailIsInUse');
+Route::post('/api/v1/checkIfUsernameIsInUse', 'APIController@checkIfUsernameIsInUse');
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
