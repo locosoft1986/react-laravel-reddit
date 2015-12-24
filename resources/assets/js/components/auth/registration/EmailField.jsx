@@ -13,12 +13,14 @@ module.exports = React.createClass({
 	    };
 	},
 	onChange: function(e) {
-		var val = e.target.value;
 
-    if (!validator.validate(val)) {
+		this.setState({
+			value: e.target.value
+		});
+
+    if (!validator.validate(e.target.value)) {
       this.setState({
-        valid: false,
-        value: val
+        valid: false
       });
 			Actions.postFormErrors({
 				'id': 'emailInvalid',
@@ -26,25 +28,20 @@ module.exports = React.createClass({
 			});
     } else {
 			Actions.clearFormError('emailInvalid');
-			this.setState({
-				value: val
-			});
     }
 
-		HTTP.post('/api/v1/checkIfEmailIsInUse', {email: val})
+		HTTP.post('/api/v1/checkIfEmailIsInUse', {email: e.target.value})
 				.then(function(response) {
 					if (response.error) {
 						this.setState({
-							valid: false,
-							value: val
+							valid: false
 						});
 						Actions.postFormErrors(response);
 					} else {
 						Actions.clearFormError('emailInUse');
-						if (validator.validate(val)) {
+						if (validator.validate(e.target.value)) {
 							this.setState({
-								valid: true,
-								value: val
+								valid: true
 							});
 						}
 					}

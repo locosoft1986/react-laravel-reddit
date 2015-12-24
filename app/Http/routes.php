@@ -46,12 +46,15 @@ Route::group(['middleware' => ['web']], function () {
   Route::post('/api/v1/register', 'AuthenticateController@postRegister');
   Route::get('/logout', 'AuthenticateController@getLogout');
 
-  Route::get('/new/subreddit', 'SubredditController@newSubreddit');
-
   Route::get('/r/{subreddit}', 'SubredditController@showSubreddit');
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {
   Route::post('/api/v1/checkIfSubredditNameIsInUse', 'APIController@checkIfSubredditNameIsInUse');
+
+  Route::get('/new/subreddit', 'SubredditController@newSubreddit');
   Route::post('/new/subreddit', 'SubredditController@createNewSubreddit');
+
+  Route::get('/new/post', 'SubredditController@newPost');
+  Route::post('/new/post', 'SubredditController@createNewPost');
 });
