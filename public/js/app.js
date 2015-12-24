@@ -20765,9 +20765,7 @@ var ReactDOM = require('react-dom');
 var LoginForm = require('./components/auth/login/LoginForm.jsx');
 var RegistrationForm = require('./components/auth/registration/RegistrationForm.jsx');
 
-if (document.getElementById('loginForm')) {
-  ReactDOM.render(React.createElement(LoginForm, null), document.getElementById('loginForm'));
-}
+if (document.getElementById('loginForm')) ReactDOM.render(React.createElement(LoginForm, null), document.getElementById('loginForm'));
 if (document.getElementById('registrationForm')) ReactDOM.render(React.createElement(RegistrationForm, null), document.getElementById('registrationForm'));
 
 },{"./components/auth/login/LoginForm.jsx":183,"./components/auth/registration/RegistrationForm.jsx":188,"react":158,"react-dom":2}],181:[function(require,module,exports){
@@ -20872,7 +20870,7 @@ module.exports = React.createClass({
 			React.createElement(
 				'form',
 				{ onSubmit: this.onSubmit },
-				React.createElement(AlertWrapper, { alerts: this.state.errors }),
+				React.createElement(AlertWrapper, { alertType: 'warning', alerts: this.state.errors }),
 				React.createElement('input', { name: '_token', type: 'hidden', value: this.state.token }),
 				React.createElement(UsernameField, { ref: 'username' }),
 				React.createElement(PasswordField, { ref: 'password' }),

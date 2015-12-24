@@ -49,7 +49,7 @@ module.exports = React.createClass({
 			<div style={containerStyle} className="container">
 				<h1>Sign in</h1>
 				<form onSubmit={this.onSubmit}>
-					<AlertWrapper alerts={this.state.errors} />
+					<AlertWrapper alertType="warning" alerts={this.state.errors} />
 					<input name="_token" type="hidden" value={this.state.token} />
 					<UsernameField ref="username" />
 					<PasswordField ref="password" />
