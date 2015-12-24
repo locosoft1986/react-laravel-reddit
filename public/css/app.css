@@ -1,15 +1,14 @@
 .alert {
   padding: 10px;
   transition: all 1s ease;
-  border-radius: 5px;
-}
+  border-radius: 5px; }
 
 .alert-warning {
   border: 1px solid #F44336;
   color: #F44336;
-  background: #FFBCB7;
-}
+  background: #FFBCB7; }
 
 .brand-logo {
-  margin-left: 10px;
-}
+  margin-left: 10px; }
+
+/*# sourceMappingURL=app.css.map */

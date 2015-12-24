@@ -17,8 +17,8 @@ class AuthenticateController extends Controller
   }
 
   public function postLogin(Request $request) {
-    if (Auth::attempt($request->only('username', 'password'), true)) {
-      return redirect()->intended('/');
+    if (Auth::attempt($request->only('username', 'password'))) {
+      return 200;
     } else {
       return response()->json([
         "id" => "invalidCredentials",
@@ -41,7 +41,7 @@ class AuthenticateController extends Controller
 
     Auth::login($user);
 
-    return redirect()->intended('/');
+    return 200;
   }
 
   public function getLogout() {

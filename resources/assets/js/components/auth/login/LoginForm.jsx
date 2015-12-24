@@ -31,6 +31,15 @@ module.exports = React.createClass({
 		});
 	},
 
+	onSubmit: function(e) {
+		e.preventDefault();
+		Actions.postLogin({
+			username: this.refs.username.state.value,
+			password: this.refs.password.state.value,
+			"_token": this.state.token
+		});
+	},
+
 	render: function() {
 		var containerStyle = {
 			marginTop: 25
@@ -39,7 +48,7 @@ module.exports = React.createClass({
 		return (
 			<div style={containerStyle} className="container">
 				<h1>Sign in</h1>
-				<form action="/login" method="post">
+				<form onSubmit={this.onSubmit}>
 					<AlertWrapper alerts={this.state.errors} />
 					<input name="_token" type="hidden" value={this.state.token} />
 					<UsernameField ref="username" />

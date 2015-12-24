@@ -35,13 +35,18 @@ module.exports = React.createClass({
 	},
 
 	onSubmit: function(e) {
+		e.preventDefault();
 		if (this.refs.username.state.valid &&
 				this.refs.email.state.valid &&
 				this.refs.password.state.password_valid &&
 				this.refs.password.state.confirmation_valid) {
-
+					Actions.postRegistration({
+						email: this.refs.email.state.value,
+						password: this.refs.password.state.password,
+						username: this.refs.username.state.username,
+						"_token": this.state.token
+					});
 				} else {
-					e.preventDefault();
 					Actions.postFormErrors({
 						'id': 'allFieldsMustBeValid',
 						"error": "All fields must be valid"
@@ -62,7 +67,7 @@ module.exports = React.createClass({
 			<div style={containerStyle} className="container">
 				<h1>New Account</h1>
 				<AlertWrapper alertType="warning" alerts={this.state.errors} />
-				<form action="/register" method="POST" style={formStyle} onSubmit={this.onSubmit}>
+				<form style={formStyle} onSubmit={this.onSubmit}>
 					<input name="_token" type="hidden" value={this.state.token} />
 					<UsernameField ref="username" />
 					<EmailField ref="email" />

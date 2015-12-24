@@ -1,6 +1,10 @@
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
 
+$.ajaxSetup({
+  headers: { 'X-CSRF-TOKEN': $('#token').attr('content') }
+});
+
 var service = {
   get: function(url) {
     return fetch(baseUrl + url)
@@ -19,17 +23,6 @@ var service = {
       body: JSON.stringify(data)
     }).then(function(response) {
       return response.json();
-    });
-  },
-
-  authenticatedGet: function(url) {
-    return fetch(baseUrl + url, {
-      "headers": {
-        "Authorization": "Bearer " + localstorage.token
-      },
-      "method": "get"
-    }).then(function(response) {
-        return response.json();
     });
   }
 }

@@ -49,30 +49,40 @@ module.exports = Reflux.createStore({
     this.fireUpdate();
   },
 
-  postRegistration: function(data) {
-    HTTP.post('/api/v1/register', data)
-        .then(function(response) {
-          if (response.error) {
-            this.postFormErrors(response);
-            this.fireUpdate();
-          } else {
-            location.assign('/');
-          }
-        }.bind(this));
-
-    this.fireUpdate();
+  postLogin: function(data) {
+    var vm = this;
+    $.ajax({
+      method: "post",
+      url: 'http://localhost:8000/api/v1/login',
+      dataType: "json",
+      data: data,
+      success: function(response) {
+        if (response.error) {
+          vm.postFormErrors(response);
+          vm.fireUpdate();
+        } else {
+          location.assign('/');
+        }
+      }
+    });
   },
 
-  postLogin: function(data) {
-    HTTP.post('/api/v1/login', data)
-        .then(function(response) {
-          if (response.error) {
-            this.postFormErrors(response);
-            this.fireUpdate();
-          } else {
-            location.assign('/');
-          }
-        }.bind(this));
+  postRegistration: function(data) {
+    var vm = this;
+    $.ajax({
+      method: "post",
+      url: 'http://localhost:8000/api/v1/register',
+      dataType: "json",
+      data: data,
+      success: function(response) {
+        if (response.error) {
+          vm.postFormErrors(response);
+          vm.fireUpdate();
+        } else {
+          location.assign('/');
+        }
+      }
+    });
   },
 
   fireUpdate: function() {

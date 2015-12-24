@@ -20847,6 +20847,15 @@ module.exports = React.createClass({
 		});
 	},
 
+	onSubmit: function (e) {
+		e.preventDefault();
+		Actions.postLogin({
+			username: this.refs.username.state.value,
+			password: this.refs.password.state.value,
+			"_token": this.state.token
+		});
+	},
+
 	render: function () {
 		var containerStyle = {
 			marginTop: 25
@@ -20862,7 +20871,7 @@ module.exports = React.createClass({
 			),
 			React.createElement(
 				'form',
-				{ action: '/login', method: 'post' },
+				{ onSubmit: this.onSubmit },
 				React.createElement(AlertWrapper, { alerts: this.state.errors }),
 				React.createElement('input', { name: '_token', type: 'hidden', value: this.state.token }),
 				React.createElement(UsernameField, { ref: 'username' }),
@@ -21201,8 +21210,15 @@ module.exports = React.createClass({
 	},
 
 	onSubmit: function (e) {
-		if (this.refs.username.state.valid && this.refs.email.state.valid && this.refs.password.state.password_valid && this.refs.password.state.confirmation_valid) {} else {
-			e.preventDefault();
+		e.preventDefault();
+		if (this.refs.username.state.valid && this.refs.email.state.valid && this.refs.password.state.password_valid && this.refs.password.state.confirmation_valid) {
+			Actions.postRegistration({
+				email: this.refs.email.state.value,
+				password: this.refs.password.state.password,
+				username: this.refs.username.state.username,
+				"_token": this.state.token
+			});
+		} else {
 			Actions.postFormErrors({
 				'id': 'allFieldsMustBeValid',
 				"error": "All fields must be valid"
@@ -21230,7 +21246,7 @@ module.exports = React.createClass({
 			React.createElement(AlertWrapper, { alertType: 'warning', alerts: this.state.errors }),
 			React.createElement(
 				'form',
-				{ action: '/register', method: 'POST', style: formStyle, onSubmit: this.onSubmit },
+				{ style: formStyle, onSubmit: this.onSubmit },
 				React.createElement('input', { name: '_token', type: 'hidden', value: this.state.token }),
 				React.createElement(UsernameField, { ref: 'username' }),
 				React.createElement(EmailField, { ref: 'email' }),
@@ -21365,28 +21381,40 @@ module.exports = Reflux.createStore({
     this.fireUpdate();
   },
 
-  postRegistration: function (data) {
-    HTTP.post('/api/v1/register', data).then((function (response) {
-      if (response.error) {
-        this.postFormErrors(response);
-        this.fireUpdate();
-      } else {
-        location.assign('/');
+  postLogin: function (data) {
+    var vm = this;
+    $.ajax({
+      method: "post",
+      url: 'http://localhost:8000/api/v1/login',
+      dataType: "json",
+      data: data,
+      success: function (response) {
+        if (response.error) {
+          vm.postFormErrors(response);
+          vm.fireUpdate();
+        } else {
+          location.assign('/');
+        }
       }
-    }).bind(this));
-
-    this.fireUpdate();
+    });
   },
 
-  postLogin: function (data) {
-    HTTP.post('/api/v1/login', data).then((function (response) {
-      if (response.error) {
-        this.postFormErrors(response);
-        this.fireUpdate();
-      } else {
-        location.assign('/');
+  postRegistration: function (data) {
+    var vm = this;
+    $.ajax({
+      method: "post",
+      url: 'http://localhost:8000/api/v1/register',
+      dataType: "json",
+      data: data,
+      success: function (response) {
+        if (response.error) {
+          vm.postFormErrors(response);
+          vm.fireUpdate();
+        } else {
+          location.assign('/');
+        }
       }
-    }).bind(this));
+    });
   },
 
   fireUpdate: function () {
@@ -21397,6 +21425,10 @@ module.exports = Reflux.createStore({
 },{"../services/HTTPService":192,"./AuthActions.jsx":190,"reflux":175}],192:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
+
+$.ajaxSetup({
+  headers: { 'X-CSRF-TOKEN': $('#token').attr('content') }
+});
 
 var service = {
   get: function (url) {
@@ -21413,17 +21445,6 @@ var service = {
       },
       method: "post",
       body: JSON.stringify(data)
-    }).then(function (response) {
-      return response.json();
-    });
-  },
-
-  authenticatedGet: function (url) {
-    return fetch(baseUrl + url, {
-      "headers": {
-        "Authorization": "Bearer " + localstorage.token
-      },
-      "method": "get"
     }).then(function (response) {
       return response.json();
     });

@@ -39,11 +39,11 @@ Route::group(['middleware' => ['web']], function () {
   });
   Route::get('/login', 'AuthenticateController@getLogin');
 
-  Route::post('/login', 'AuthenticateController@postLogin');
+  Route::post('/api/v1/login', 'AuthenticateController@postLogin');
 
   Route::get('/register', 'AuthenticateController@getRegister');
 
-  Route::post('/register', 'AuthenticateController@postRegister');
+  Route::post('/api/v1/register', 'AuthenticateController@postRegister');
   Route::get('/logout', 'AuthenticateController@getLogout');
   Route::get('dd', function() {
     dd(Auth::user());
