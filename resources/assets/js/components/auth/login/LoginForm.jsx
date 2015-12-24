@@ -19,14 +19,6 @@ module.exports = React.createClass({
 		};
 	},
 
-	onSubmit: function(e) {
-		e.preventDefault();
-		Actions.postLogin({
-			username: this.refs.username.state.value,
-			password: this.refs.password.state.value
-		});
-	},
-
 	componentWillMount: function() {
 		this.setState({
 			token: document.getElementById('token').content
@@ -43,7 +35,7 @@ module.exports = React.createClass({
 		var containerStyle = {
 			marginTop: 25
 		};
-		console.log(this.state.token);
+
 		return (
 			<div style={containerStyle} className="container">
 				<h1>Sign in</h1>

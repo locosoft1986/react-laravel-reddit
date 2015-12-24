@@ -20835,14 +20835,6 @@ module.exports = React.createClass({
 		};
 	},
 
-	onSubmit: function (e) {
-		e.preventDefault();
-		Actions.postLogin({
-			username: this.refs.username.state.value,
-			password: this.refs.password.state.value
-		});
-	},
-
 	componentWillMount: function () {
 		this.setState({
 			token: document.getElementById('token').content
@@ -20859,7 +20851,7 @@ module.exports = React.createClass({
 		var containerStyle = {
 			marginTop: 25
 		};
-		console.log(this.state.token);
+
 		return React.createElement(
 			'div',
 			{ style: containerStyle, className: 'container' },
@@ -21190,7 +21182,8 @@ module.exports = React.createClass({
 	getInitialState: function () {
 		return {
 			errors: [],
-			valid: false
+			valid: false,
+			token: document.getElementById('token').content
 		};
 	},
 
@@ -21198,6 +21191,12 @@ module.exports = React.createClass({
 
 		this.setState({
 			errors: data
+		});
+	},
+
+	componentWillMount: function () {
+		this.setState({
+			token: document.getElementById('token').content
 		});
 	},
 
@@ -21232,6 +21231,7 @@ module.exports = React.createClass({
 			React.createElement(
 				'form',
 				{ action: '/register', method: 'POST', style: formStyle, onSubmit: this.onSubmit },
+				React.createElement('input', { name: '_token', type: 'hidden', value: this.state.token }),
 				React.createElement(UsernameField, { ref: 'username' }),
 				React.createElement(EmailField, { ref: 'email' }),
 				React.createElement(PasswordConfirmationField, { ref: 'password' }),

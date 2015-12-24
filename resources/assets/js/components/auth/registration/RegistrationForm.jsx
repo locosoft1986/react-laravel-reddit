@@ -15,7 +15,8 @@ module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			errors: [],
-			valid: false
+			valid: false,
+			token: document.getElementById('token').content
 		};
 	},
 
@@ -25,6 +26,12 @@ module.exports = React.createClass({
 			errors: data
 		});
 
+	},
+
+	componentWillMount: function() {
+		this.setState({
+			token: document.getElementById('token').content
+		});
 	},
 
 	onSubmit: function(e) {
@@ -56,6 +63,7 @@ module.exports = React.createClass({
 				<h1>New Account</h1>
 				<AlertWrapper alertType="warning" alerts={this.state.errors} />
 				<form action="/register" method="POST" style={formStyle} onSubmit={this.onSubmit}>
+					<input name="_token" type="hidden" value={this.state.token} />
 					<UsernameField ref="username" />
 					<EmailField ref="email" />
 					<PasswordConfirmationField ref="password" />
