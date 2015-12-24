@@ -14,10 +14,11 @@ module.exports = React.createClass({
 	render: function() {
 		return(
 			<div className="input-field">
-				<input type="email"
+				<input type="text"
 					value={this.state.value}
 					onChange={this.onChange}
 					id="username"
+					name="username"
 					required
 				/>
 				<label htmlFor="username">Username</label>

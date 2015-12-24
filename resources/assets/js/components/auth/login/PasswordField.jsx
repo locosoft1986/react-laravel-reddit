@@ -18,6 +18,7 @@ module.exports = React.createClass({
 					value={this.state.value}
 					onChange={this.onChange}
           id="password"
+					name="password"
 					required
 				/>
 				<label htmlFor="password">Password</label>

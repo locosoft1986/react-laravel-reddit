@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -101,6 +101,7 @@ module.exports = React.createClass({
   					onChange={this.onPasswordChange}
   					className={passwordClass}
   					id="password"
+						name="password"
   					required
   				/>
   				<label htmlFor="password">Password</label>

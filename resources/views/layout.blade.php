@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta id="token" name="token" content="{{csrf_token()}}">
     <title>Reddit Clone</title>
     <link rel="stylesheet" href="/css/materialize.min.css" media="screen" title="no title" charset="utf-8">
   </head>

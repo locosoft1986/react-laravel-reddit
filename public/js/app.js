@@ -20814,22 +20814,52 @@ module.exports = React.createClass({
 },{"./AlertItem.jsx":181,"react":158}],183:[function(require,module,exports){
 var React = require('react');
 
-var EmailField = require('./UsernameField.jsx');
+var UsernameField = require('./UsernameField.jsx');
 var PasswordField = require('./PasswordField.jsx');
 
 var AlertWrapper = require('../../AlertWrapper.jsx');
 
+var Reflux = require('reflux');
+var Actions = require('../../../reflux/AuthActions.jsx');
+var Store = require('../../../reflux/AuthStore.jsx');
+
 module.exports = React.createClass({
 	displayName: 'exports',
 
+	mixins: [Reflux.listenTo(Store, 'onChange')],
+
+	getInitialState: function () {
+		return {
+			errors: [],
+			token: document.getElementById('token').content
+		};
+	},
+
 	onSubmit: function (e) {
 		e.preventDefault();
+		Actions.postLogin({
+			username: this.refs.username.state.value,
+			password: this.refs.password.state.value
+		});
 	},
+
+	componentWillMount: function () {
+		this.setState({
+			token: document.getElementById('token').content
+		});
+	},
+
+	onChange: function (event, data) {
+		this.setState({
+			errors: data
+		});
+	},
+
 	render: function () {
 		var containerStyle = {
 			marginTop: 25
 		};
-		var errors = [];
+		console.log(this.state.token);
 		return React.createElement(
 			'div',
 			{ style: containerStyle, className: 'container' },
@@ -20840,10 +20870,11 @@ module.exports = React.createClass({
 			),
 			React.createElement(
 				'form',
-				{ onSubmit: this.onSubmit },
-				React.createElement(AlertWrapper, { alerts: errors }),
-				React.createElement(EmailField, null),
-				React.createElement(PasswordField, null),
+				{ action: '/login', method: 'post' },
+				React.createElement(AlertWrapper, { alerts: this.state.errors }),
+				React.createElement('input', { name: '_token', type: 'hidden', value: this.state.token }),
+				React.createElement(UsernameField, { ref: 'username' }),
+				React.createElement(PasswordField, { ref: 'password' }),
 				React.createElement(
 					'button',
 					{ className: 'waves-effect waves-light btn blue right' },
@@ -20854,7 +20885,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../AlertWrapper.jsx":182,"./PasswordField.jsx":184,"./UsernameField.jsx":185,"react":158}],184:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":190,"../../../reflux/AuthStore.jsx":191,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":184,"./UsernameField.jsx":185,"react":158,"reflux":175}],184:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20878,6 +20909,7 @@ module.exports = React.createClass({
 				value: this.state.value,
 				onChange: this.onChange,
 				id: "password",
+				name: "password",
 				required: true
 			}),
 			React.createElement(
@@ -20909,10 +20941,11 @@ module.exports = React.createClass({
 		return React.createElement(
 			"div",
 			{ className: "input-field" },
-			React.createElement("input", { type: "email",
+			React.createElement("input", { type: "text",
 				value: this.state.value,
 				onChange: this.onChange,
 				id: "username",
+				name: "username",
 				required: true
 			}),
 			React.createElement(
@@ -20928,7 +20961,7 @@ module.exports = React.createClass({
 var React = require('react');
 var validator = require('email-validator');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 
 var HTTP = require('../../../services/HTTPService');
 
@@ -20988,6 +21021,7 @@ module.exports = React.createClass({
 				onChange: this.onChange,
 				id: 'email',
 				className: emailClass,
+				name: 'email',
 				required: true
 			}),
 			React.createElement(
@@ -20999,10 +21033,10 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/RegistrationActions.jsx":191,"../../../services/HTTPService":193,"email-validator":1,"react":158}],187:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":190,"../../../services/HTTPService":192,"email-validator":1,"react":158}],187:[function(require,module,exports){
 var React = require('react');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -21107,6 +21141,7 @@ module.exports = React.createClass({
           onChange: this.onPasswordChange,
           className: passwordClass,
           id: 'password',
+          name: 'password',
           required: true
         }),
         React.createElement(
@@ -21135,7 +21170,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/RegistrationActions.jsx":191,"react":158}],188:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":190,"react":158}],188:[function(require,module,exports){
 var React = require('react');
 
 var EmailField = require('./EmailField.jsx');
@@ -21144,8 +21179,8 @@ var UsernameField = require('./UsernameField.jsx');
 var AlertWrapper = require('../../AlertWrapper.jsx');
 
 var Reflux = require('reflux');
-var Actions = require('../../../reflux/RegistrationActions.jsx');
-var Store = require('../../../reflux/RegistrationStore.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
+var Store = require('../../../reflux/AuthStore.jsx');
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -21154,21 +21189,9 @@ module.exports = React.createClass({
 
 	getInitialState: function () {
 		return {
-			errors: []
+			errors: [],
+			valid: false
 		};
-	},
-
-	onSubmit: function (e) {
-		e.preventDefault();
-		if (this.refs.username.state.valid && this.refs.email.state.valid && this.refs.password.state.password_valid && this.refs.password.state.confirmation_valid) {
-
-			console.log('again');
-			Actions.postRegistration({
-				username: this.refs.username.state.username,
-				email: this.refs.email.state.value,
-				password: this.refs.password.state.password
-			});
-		}
 	},
 
 	onChange: function (event, data) {
@@ -21176,6 +21199,16 @@ module.exports = React.createClass({
 		this.setState({
 			errors: data
 		});
+	},
+
+	onSubmit: function (e) {
+		if (this.refs.username.state.valid && this.refs.email.state.valid && this.refs.password.state.password_valid && this.refs.password.state.confirmation_valid) {} else {
+			e.preventDefault();
+			Actions.postFormErrors({
+				'id': 'allFieldsMustBeValid',
+				"error": "All fields must be valid"
+			});
+		}
 	},
 
 	render: function () {
@@ -21198,13 +21231,15 @@ module.exports = React.createClass({
 			React.createElement(AlertWrapper, { alertType: 'warning', alerts: this.state.errors }),
 			React.createElement(
 				'form',
-				{ onSubmit: this.onSubmit, style: formStyle },
+				{ action: '/register', method: 'POST', style: formStyle, onSubmit: this.onSubmit },
 				React.createElement(UsernameField, { ref: 'username' }),
 				React.createElement(EmailField, { ref: 'email' }),
 				React.createElement(PasswordConfirmationField, { ref: 'password' }),
 				React.createElement(
 					'button',
-					{ className: 'waves-effect waves-light btn blue right' },
+					{
+						className: 'waves-effect waves-light btn blue right'
+					},
 					'Register'
 				)
 			)
@@ -21212,10 +21247,10 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/RegistrationActions.jsx":191,"../../../reflux/RegistrationStore.jsx":192,"../../AlertWrapper.jsx":182,"./EmailField.jsx":186,"./PasswordConfirmationField.jsx":187,"./UsernameField.jsx":189,"react":158,"reflux":175}],189:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":190,"../../../reflux/AuthStore.jsx":191,"../../AlertWrapper.jsx":182,"./EmailField.jsx":186,"./PasswordConfirmationField.jsx":187,"./UsernameField.jsx":189,"react":158,"reflux":175}],189:[function(require,module,exports){
 var React = require('react');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 var HTTP = require('../../../services/HTTPService');
 
 module.exports = React.createClass({
@@ -21261,6 +21296,7 @@ module.exports = React.createClass({
         onChange: this.onChange,
         className: validClass,
         id: 'username',
+        name: 'username',
         required: true
       }),
       React.createElement(
@@ -21272,20 +21308,14 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/RegistrationActions.jsx":191,"../../../services/HTTPService":193,"react":158}],190:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":190,"../../../services/HTTPService":192,"react":158}],190:[function(require,module,exports){
 var Reflux = require('reflux');
 
-module.exports = Reflux.createActions(['login', 'loggedIn', 'getToken', 'logout']);
+module.exports = Reflux.createActions(['getFormErrors', 'postFormErrors', 'clearFormError', 'postRegistration', 'postLogin']);
 
 },{"reflux":175}],191:[function(require,module,exports){
 var Reflux = require('reflux');
-
-module.exports = Reflux.createActions(['getFormErrors', 'postFormErrors', 'clearFormError', 'postRegistration']);
-
-},{"reflux":175}],192:[function(require,module,exports){
-var Reflux = require('reflux');
-var Actions = require('./RegistrationActions.jsx');
-var AuthActions = require('./AuthActions.jsx');
+var Actions = require('./AuthActions.jsx');
 
 var HTTP = require('../services/HTTPService');
 
@@ -21336,19 +21366,27 @@ module.exports = Reflux.createStore({
   },
 
   postRegistration: function (data) {
-    HTTP.post('/api/register', data).then((function (response) {
+    HTTP.post('/api/v1/register', data).then((function (response) {
       if (response.error) {
-        this.errors.push({
-          id: response.id,
-          error: response.error
-        });
+        this.postFormErrors(response);
         this.fireUpdate();
       } else {
-        AuthActions.login(response.token);
+        location.assign('/');
       }
     }).bind(this));
 
     this.fireUpdate();
+  },
+
+  postLogin: function (data) {
+    HTTP.post('/api/v1/login', data).then((function (response) {
+      if (response.error) {
+        this.postFormErrors(response);
+        this.fireUpdate();
+      } else {
+        location.assign('/');
+      }
+    }).bind(this));
   },
 
   fireUpdate: function () {
@@ -21356,7 +21394,7 @@ module.exports = Reflux.createStore({
   }
 });
 
-},{"../services/HTTPService":193,"./AuthActions.jsx":190,"./RegistrationActions.jsx":191,"reflux":175}],193:[function(require,module,exports){
+},{"../services/HTTPService":192,"./AuthActions.jsx":190,"reflux":175}],192:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
 

@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 var HTTP = require('../../../services/HTTPService');
 
 module.exports = React.createClass({
@@ -44,6 +44,7 @@ module.exports = React.createClass({
           onChange={this.onChange}
           className={validClass}
           id="username"
+          name="username"
           required
         />
         <label htmlFor="username">Username</label>

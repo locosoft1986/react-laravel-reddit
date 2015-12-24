@@ -11,13 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 
-Route::get('/login', 'AuthenticateController@getLogin');
-
-Route::get('/register', 'AuthenticateController@getRegister');
 
 
 /*
@@ -40,5 +34,18 @@ Route::post('/api/v1/checkIfUsernameIsInUse', 'APIController@checkIfUsernameIsIn
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+  Route::get('/', function () {
+      return view('index');
+  });
+  Route::get('/login', 'AuthenticateController@getLogin');
+
+  Route::post('/login', 'AuthenticateController@postLogin');
+
+  Route::get('/register', 'AuthenticateController@getRegister');
+
+  Route::post('/register', 'AuthenticateController@postRegister');
+  Route::get('/logout', 'AuthenticateController@getLogout');
+  Route::get('dd', function() {
+    dd(Auth::user());
+  });
 });

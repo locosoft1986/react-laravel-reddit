@@ -1,7 +1,7 @@
 var React = require('react');
 var validator = require('email-validator');
 
-var Actions = require('../../../reflux/RegistrationActions.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
 
 var HTTP = require('../../../services/HTTPService');
 
@@ -59,6 +59,7 @@ module.exports = React.createClass({
 					onChange={this.onChange}
 					id="email"
 					className={emailClass}
+					name="email"
 					required
 				/>
 				<label htmlFor="email">Email</label>

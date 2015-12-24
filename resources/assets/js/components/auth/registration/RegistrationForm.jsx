@@ -6,33 +6,17 @@ var UsernameField = require('./UsernameField.jsx');
 var AlertWrapper = require('../../AlertWrapper.jsx');
 
 var Reflux = require('reflux');
-var Actions = require('../../../reflux/RegistrationActions.jsx');
-var Store = require('../../../reflux/RegistrationStore.jsx');
+var Actions = require('../../../reflux/AuthActions.jsx');
+var Store = require('../../../reflux/AuthStore.jsx');
 
 module.exports = React.createClass({
 	mixins: [Reflux.listenTo(Store, 'onChange')],
 
 	getInitialState: function() {
 		return {
-			errors: []
+			errors: [],
+			valid: false
 		};
-	},
-
-	onSubmit: function(e) {
-		e.preventDefault();
-		if (this.refs.username.state.valid &&
-				this.refs.email.state.valid &&
-				this.refs.password.state.password_valid &&
-				this.refs.password.state.confirmation_valid) {
-
-					console.log('again');
-					Actions.postRegistration({
-						username: this.refs.username.state.username,
-						email: this.refs.email.state.value,
-						password: this.refs.password.state.password
-					});
-
-		}
 	},
 
 	onChange: function(event, data) {
@@ -41,6 +25,21 @@ module.exports = React.createClass({
 			errors: data
 		});
 
+	},
+
+	onSubmit: function(e) {
+		if (this.refs.username.state.valid &&
+				this.refs.email.state.valid &&
+				this.refs.password.state.password_valid &&
+				this.refs.password.state.confirmation_valid) {
+
+				} else {
+					e.preventDefault();
+					Actions.postFormErrors({
+						'id': 'allFieldsMustBeValid',
+						"error": "All fields must be valid"
+					});
+				}
 	},
 
 	render: function() {
@@ -56,11 +55,13 @@ module.exports = React.createClass({
 			<div style={containerStyle} className="container">
 				<h1>New Account</h1>
 				<AlertWrapper alertType="warning" alerts={this.state.errors} />
-				<form onSubmit={this.onSubmit} style={formStyle}>
+				<form action="/register" method="POST" style={formStyle} onSubmit={this.onSubmit}>
 					<UsernameField ref="username" />
 					<EmailField ref="email" />
 					<PasswordConfirmationField ref="password" />
-					<button className="waves-effect waves-light btn blue right">Register</button>
+					<button
+						className="waves-effect waves-light btn blue right"
+					>Register</button>
 				</form>
 			</div>
 		);

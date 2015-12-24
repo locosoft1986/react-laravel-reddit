@@ -1,36 +1,81 @@
 var Reflux = require('reflux');
+var Actions = require('./AuthActions.jsx');
 
-var Actions = require ('./AuthActions.jsx');
+var HTTP = require('../services/HTTPService');
 
 module.exports = Reflux.createStore({
   listenables: [Actions],
 
-  login: function(token) {
-    console.log(!!localStorage.token);
-    if (localStorage.token) {
-      this.fireUpdate();
-    }
-    if (token) {
-      console.log('asd');
-      localStorage.token = token;
-      this.fireUpdate();
+  getFormErrors: function() {
+    if (!this.errors) {
+      this.errors = [];
     }
   },
 
-  loggedIn: function() {
-    return !!localStorage.token;
-  },
+  postFormErrors: function(data) {
+    if (!this.errors) {
+      this.errors = [];
+    }
+    var found = false;
+    for (var i = 0; i < this.errors.length; i++) {
+      if (this.errors[i].id == data.id) {
+        found = true;
+      }
+    }
+    if (!found) {
+      this.errors.push(data);
+    }
 
-  getToken: function() {
-    return localStorage.token;
-  },
+    found = false;
 
-  logout: function() {
-    delete localStorage.token;
     this.fireUpdate();
   },
 
+  clearFormError: function(data) {
+    var indexFound = null;
+    if (!this.errors) {
+      this.errors = [];
+    }
+    for (var i = 0; i < this.errors.length; i++) {
+      if (this.errors[i].id == data) {
+        indexFound = i;
+        break;
+      }
+    }
+    if (indexFound != null) {
+      this.errors.splice(indexFound, 1);
+    }
+
+    this.fireUpdate();
+  },
+
+  postRegistration: function(data) {
+    HTTP.post('/api/v1/register', data)
+        .then(function(response) {
+          if (response.error) {
+            this.postFormErrors(response);
+            this.fireUpdate();
+          } else {
+            location.assign('/');
+          }
+        }.bind(this));
+
+    this.fireUpdate();
+  },
+
+  postLogin: function(data) {
+    HTTP.post('/api/v1/login', data)
+        .then(function(response) {
+          if (response.error) {
+            this.postFormErrors(response);
+            this.fireUpdate();
+          } else {
+            location.assign('/');
+          }
+        }.bind(this));
+  },
+
   fireUpdate: function() {
-    this.trigger('change', !!localStorage.token);
+    this.trigger('change', this.errors);
   }
 });
