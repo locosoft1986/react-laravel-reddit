@@ -44,4 +44,18 @@ class APIController extends Controller
         return 200;
       }
     }
+
+    public function getListOfSubreddits() {
+       $subreddits = Subreddit::all();
+       $data = [];
+       foreach ($subreddits as $subreddit) {
+         array_push($data, ["id" => $subreddit->id, "name" => $subreddit->name]);
+       }
+
+       return $data;
+    }
+
+    public function test($subreddit) {
+      return Subreddit::whereName($subreddit)->firstOrFail()->id;
+    }
 }

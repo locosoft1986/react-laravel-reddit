@@ -57,4 +57,8 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
   Route::get('/new/post', 'SubredditController@newPost');
   Route::post('/new/post', 'SubredditController@createNewPost');
+
+  Route::get('/api/v1/getListOfSubreddits', 'APIController@getListOfSubreddits');
+
+  Route::get('/test/{subreddit}', 'APIController@test');
 });

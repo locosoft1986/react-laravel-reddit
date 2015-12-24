@@ -20765,12 +20765,14 @@ var ReactDOM = require('react-dom');
 var LoginForm = require('./components/auth/login/LoginForm.jsx');
 var RegistrationForm = require('./components/auth/registration/RegistrationForm.jsx');
 var NewSubreddit = require('./components/subreddit/NewSubreddit.jsx');
+var NewPost = require('./components/subreddit/NewPost.jsx');
 
 if (document.getElementById('loginForm')) ReactDOM.render(React.createElement(LoginForm, null), document.getElementById('loginForm'));
 if (document.getElementById('registrationForm')) ReactDOM.render(React.createElement(RegistrationForm, null), document.getElementById('registrationForm'));
 if (document.getElementById('newSubreddit')) ReactDOM.render(React.createElement(NewSubreddit, null), document.getElementById('newSubreddit'));
+if (document.getElementById('newPost')) ReactDOM.render(React.createElement(NewPost, null), document.getElementById('newPost'));
 
-},{"./components/auth/login/LoginForm.jsx":183,"./components/auth/registration/RegistrationForm.jsx":188,"./components/subreddit/NewSubreddit.jsx":190,"react":158,"react-dom":2}],181:[function(require,module,exports){
+},{"./components/auth/login/LoginForm.jsx":184,"./components/auth/registration/RegistrationForm.jsx":189,"./components/subreddit/NewPost.jsx":193,"./components/subreddit/NewSubreddit.jsx":194,"react":158,"react-dom":2}],181:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20812,6 +20814,21 @@ module.exports = React.createClass({
 });
 
 },{"./AlertItem.jsx":181,"react":158}],183:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {};
+  },
+
+  render: function () {
+    return React.createElement("input", { type: "hidden", name: "_token", value: document.getElementById('token').content });
+  }
+});
+
+},{"react":158}],184:[function(require,module,exports){
 var React = require('react');
 
 var UsernameField = require('./UsernameField.jsx');
@@ -20886,7 +20903,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":191,"../../../reflux/AuthStore.jsx":192,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":184,"./UsernameField.jsx":185,"react":158,"reflux":175}],184:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":197,"../../../reflux/AuthStore.jsx":198,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":185,"./UsernameField.jsx":186,"react":158,"reflux":175}],185:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20922,7 +20939,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"react":158}],185:[function(require,module,exports){
+},{"react":158}],186:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20958,7 +20975,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"react":158}],186:[function(require,module,exports){
+},{"react":158}],187:[function(require,module,exports){
 var React = require('react');
 var validator = require('email-validator');
 
@@ -21031,7 +21048,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":191,"../../../services/HTTPService":193,"email-validator":1,"react":158}],187:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":197,"../../../services/HTTPService":199,"email-validator":1,"react":158}],188:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21168,7 +21185,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":191,"react":158}],188:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":197,"react":158}],189:[function(require,module,exports){
 var React = require('react');
 
 var EmailField = require('./EmailField.jsx');
@@ -21260,7 +21277,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":191,"../../../reflux/AuthStore.jsx":192,"../../AlertWrapper.jsx":182,"./EmailField.jsx":186,"./PasswordConfirmationField.jsx":187,"./UsernameField.jsx":189,"react":158,"reflux":175}],189:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":197,"../../../reflux/AuthStore.jsx":198,"../../AlertWrapper.jsx":182,"./EmailField.jsx":187,"./PasswordConfirmationField.jsx":188,"./UsernameField.jsx":190,"react":158,"reflux":175}],190:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21321,7 +21338,171 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":191,"../../../services/HTTPService":193,"react":158}],190:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":197,"../../../services/HTTPService":199,"react":158}],191:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement("textarea", {
+        id: "body",
+        className: "materialize-textarea",
+        value: this.state.value,
+        onChange: this.onChange,
+        name: "body"
+      }),
+      React.createElement(
+        "label",
+        { htmlFor: "body" },
+        "Body"
+      )
+    );
+  }
+});
+
+},{"react":158}],192:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement("input", {
+        type: "text",
+        name: "link",
+        id: "link",
+        value: this.state.value,
+        onChange: this.onChange,
+        required: this.props.isLink
+      }),
+      React.createElement(
+        "label",
+        { htmlFor: "link" },
+        "Link"
+      )
+    );
+  }
+});
+
+},{"react":158}],193:[function(require,module,exports){
+var React = require('react');
+
+var TitleField = require('./TitleField.jsx');
+var LinkField = require('./LinkField.jsx');
+var BodyField = require('./BodyField.jsx');
+var SubredditField = require('./SubredditField.jsx');
+
+var TokenField = require('../TokenField.jsx');
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  getInitialState: function () {
+    return {
+      isLink: true,
+      subreddits: []
+    };
+  },
+
+  componentWillMount: function () {
+    var vm = this;
+    $.ajax({
+      url: '/api/v1/getListOfSubreddits',
+      method: 'get',
+      dataType: 'json',
+      contentType: 'json',
+      success: function (response) {
+        console.log(response);
+        vm.setState({
+          subreddits: response
+        });
+      }
+    });
+  },
+
+  toggleTypeOfPost: function () {
+    this.setState({
+      isLink: !this.state.isLink
+    });
+  },
+
+  render: function () {
+    var options = this.state.subreddits.map(function (item) {
+      return React.createElement(
+        'option',
+        { value: item.id, key: item.id },
+        item.name
+      );
+    });
+    return React.createElement(
+      'div',
+      { className: 'container' },
+      React.createElement(
+        'h1',
+        null,
+        'New Post'
+      ),
+      React.createElement(
+        'div',
+        { className: 'switch' },
+        React.createElement(
+          'label',
+          null,
+          'Text',
+          React.createElement('input', { type: 'checkbox', checked: this.state.isLink, onChange: this.toggleTypeOfPost }),
+          React.createElement('span', { className: 'lever' }),
+          'Link'
+        )
+      ),
+      React.createElement(
+        'form',
+        { action: '/new/post', method: 'post' },
+        React.createElement(TokenField, null),
+        React.createElement(TitleField, null),
+        this.state.isLink ? React.createElement(LinkField, { isLink: this.state.isLink }) : React.createElement(BodyField, null),
+        React.createElement(SubredditField, { options: options }),
+        React.createElement(
+          'button',
+          { className: 'waves-effect waves-light btn blue right' },
+          'Submit'
+        )
+      )
+    );
+  }
+});
+
+},{"../TokenField.jsx":183,"./BodyField.jsx":191,"./LinkField.jsx":192,"./SubredditField.jsx":195,"./TitleField.jsx":196,"react":158}],194:[function(require,module,exports){
 var React = require('react');
 
 var HTTP = require('../../services/HTTPService');
@@ -21445,12 +21626,89 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../reflux/AuthActions.jsx":191,"../../reflux/AuthStore.jsx":192,"../../services/HTTPService":193,"../AlertWrapper.jsx":182,"react":158,"reflux":175}],191:[function(require,module,exports){
+},{"../../reflux/AuthActions.jsx":197,"../../reflux/AuthStore.jsx":198,"../../services/HTTPService":199,"../AlertWrapper.jsx":182,"react":158,"reflux":175}],195:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement(
+        "select",
+        {
+          className: "browser-default",
+          id: "subreddit",
+          value: this.state.value,
+          onChange: this.onChange,
+          name: "subreddit_id",
+          required: true
+        },
+        this.props.options
+      )
+    );
+  }
+});
+
+},{"react":158}],196:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement("input", {
+        type: "text",
+        name: "title",
+        id: "title",
+        value: this.state.value,
+        onChange: this.onChange,
+        required: true
+      }),
+      React.createElement(
+        "label",
+        { htmlFor: "title" },
+        "Title"
+      )
+    );
+  }
+});
+
+},{"react":158}],197:[function(require,module,exports){
 var Reflux = require('reflux');
 
 module.exports = Reflux.createActions(['getFormErrors', 'postFormErrors', 'clearFormError', 'postRegistration', 'postLogin']);
 
-},{"reflux":175}],192:[function(require,module,exports){
+},{"reflux":175}],198:[function(require,module,exports){
 var Reflux = require('reflux');
 var Actions = require('./AuthActions.jsx');
 
@@ -21543,7 +21801,7 @@ module.exports = Reflux.createStore({
   }
 });
 
-},{"../services/HTTPService":193,"./AuthActions.jsx":191,"reflux":175}],193:[function(require,module,exports){
+},{"../services/HTTPService":199,"./AuthActions.jsx":197,"reflux":175}],199:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
 
