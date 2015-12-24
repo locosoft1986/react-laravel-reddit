@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Subreddit;
 
 class APIController extends Controller
 {
@@ -27,6 +28,17 @@ class APIController extends Controller
         return response()->json([
           "id" => "usernameInUse",
           "error" => "That username is already in use"
+        ]);
+      } else {
+        return 200;
+      }
+    }
+
+    public function checkIfSubredditNameIsInUse(Request $request) {
+      if (Subreddit::whereName($request->name)->exists()) {
+        return response()->json([
+          "id" => "subredditNameInUse",
+          "error" => "Subreddit name is already taken"
         ]);
       } else {
         return 200;
