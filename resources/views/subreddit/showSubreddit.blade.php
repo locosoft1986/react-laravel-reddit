@@ -8,8 +8,6 @@
         <div id="subredditPosts"></div>
       </div>
     </div>
-    <div class="col s12 l4 sidebar">
-      <div id="subredditSidebar"></div>
-    </div>
+    @include('subreddit.sidebar')
   </div>
 @stop

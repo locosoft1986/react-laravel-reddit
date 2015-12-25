@@ -74,4 +74,11 @@ class SubredditController extends Controller
         }
         return $randomString;
     }
+
+    public function showPost($subreddit, $permalink, $slug) {
+      $sub = Subreddit::whereName($subreddit)->firstOrFail();
+      $post = $sub->posts()->wherePermalink($permalink)->whereSlug($slug)->firstOrFail();
+
+      return view('subreddit.showPost', compact('post'));
+    }
 }

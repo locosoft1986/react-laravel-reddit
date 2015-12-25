@@ -42,6 +42,14 @@
     transform: translateY(-50%);
     font-size: 24px;
   }
+
+  .post-content {
+    padding: 25px 0;
+    margin: 10px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+  }
 }
 
 .sidebar {
