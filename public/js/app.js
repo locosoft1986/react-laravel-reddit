@@ -21845,6 +21845,11 @@ module.exports = React.createClass({
     return React.createElement(
       'div',
       { className: 'container z-depth-1' },
+      React.createElement(
+        'h5',
+        null,
+        document.getElementById('subreddit_name').value
+      ),
       React.createElement(SubscribeButton, { subreddit: document.getElementById('subreddit_name').value }),
       React.createElement(
         'p',

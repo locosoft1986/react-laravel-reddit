@@ -14,6 +14,8 @@ use Auth;
 
 use Cocur\Slugify\Slugify;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
+
 class SubredditController extends Controller
 {
     public function newSubreddit() {
@@ -41,6 +43,7 @@ class SubredditController extends Controller
         "title" => $request->title,
         "link" => $request->link,
         "body" => $request->body,
+        "body_html" => Markdown::convertToHtml($request->body),
         "user_id" => Auth::user()->id,
         "subreddit_id" => $request->subreddit_id
       ];

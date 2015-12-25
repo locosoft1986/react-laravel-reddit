@@ -28,6 +28,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="container z-depth-1">
+        <h5>{document.getElementById('subreddit_name').value}</h5>
         <SubscribeButton subreddit={document.getElementById('subreddit_name').value} />
         <p>Subscribers: {this.state.subscriber_count}</p>
         <p>Posts: {this.state.post_count}</p>
