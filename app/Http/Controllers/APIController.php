@@ -55,7 +55,17 @@ class APIController extends Controller
        return $data;
     }
 
-    public function test($subreddit) {
-      return Subreddit::whereName($subreddit)->firstOrFail()->id;
+    public function isUserSubscribed($subreddit) {
+      $sub = Subdoot::whereName($subreddit)->firstOrFail();
+
+      if (Auth::user()->subreddits->contains($sub->id)) {
+        return response()->json([
+          'message' => 'subscribed'
+        ]);
+      } else {
+        return response()->json([
+          'message' => 'unsubscribed'
+        ]);
+      }
     }
 }

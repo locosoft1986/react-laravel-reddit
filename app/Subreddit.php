@@ -11,4 +11,8 @@ class Subreddit extends Model
     public function posts() {
       return $this->hasMany('App\Post');
     }
+
+    public function users() {
+      return $this->hasMany('App\User');
+    }
 }

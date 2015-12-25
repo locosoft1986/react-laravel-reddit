@@ -60,5 +60,6 @@ Route::group(['middleware' => ['web', 'auth']], function() {
 
   Route::get('/api/v1/getListOfSubreddits', 'APIController@getListOfSubreddits');
 
-  Route::get('/test/{subreddit}', 'APIController@test');
+  Route::get('/api/v1/isUserSubscribed/{subreddit}', 'APIController@isUserSubscribed');
+  Route::post('/r/{subreddit}', 'SubredditController@subscribeToSubreddit');
 });
