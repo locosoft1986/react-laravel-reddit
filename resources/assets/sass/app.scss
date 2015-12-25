@@ -13,3 +13,28 @@
 .brand-logo {
   margin-left: 10px;
 }
+
+.post {
+  width: 100%;
+  height: auto;
+  padding: 25px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+
+  position: relative;
+
+  .post-title {
+    font-size: 24px;
+  }
+  .post-meta {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .post-score {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+  }
+}
