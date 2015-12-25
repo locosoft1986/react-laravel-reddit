@@ -1,15 +1,17 @@
-@extends('layout')
+@extends('layout', ['sub' => $subreddit->name])
 
 @section('content')
-  <h1>{{ $subreddit->name }}</h1>
-  <div class="container">
+  <div class="container push-down">
   @foreach ($subreddit->posts as $post)
     <div class="post">
       <div class="post-title">
-        <a href="/r/{{$subreddit->name}}/{{$post->permalink}}/{{$post->slug}}">{{$post->title}}</a>
+        <a href="/r/{{$subreddit->name}}/comments/{{$post->permalink}}/{{$post->slug}}">{{$post->title}}</a>
       </div>
       <div class="post-meta">
-        {{\Carbon\Carbon::parse($post->created_at)->diffForHumans()}} | by {{$post->user->username}} to {{$post->subreddit->name}}
+        submitted
+        <span title="{{\Carbon\Carbon::parse($post->created_at)}}">{{\Carbon\Carbon::parse($post->created_at)->diffForHumans()}}</span>
+        by <a href="/u/{{$post->user->username}}">{{$post->user->username}}</a>
+        to <a href="/r/{{$post->subreddit->name}}">{{$post->subreddit->name}}</a>
       </div>
       <div class="post-score">
         {{count($post->votes)}}
