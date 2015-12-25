@@ -74,22 +74,4 @@ class SubredditController extends Controller
         }
         return $randomString;
     }
-
-    public function subscribeToSubreddit(Request $request, $subreddit) {
-      $user = Auth::user();
-
-      $sub = Subdoot::whereName($subreddit)->firstOrFail();
-
-      if ($user->subreddit->contains($sub->id)) {
-          $user->subreddit()->detach($sub->id);
-          return response()->json([
-            'message' => 'unsubscribed'
-          ]);
-      } else {
-          $user->subdoots()->attach($sub->id);
-          return response()->json([
-            'message' => 'subscribed'
-          ]);
-      }
-    }
 }

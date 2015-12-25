@@ -1,8 +1,10 @@
 @extends('layout', ['sub' => $subreddit->name])
 
 @section('content')
+  <input type="hidden" name="subreddit_name" id="subreddit_name" value="{{$subreddit->name}}" />
   <div class="container push-down">
-  @foreach ($subreddit->posts as $post)
+    <div id="subredditPosts"></div>
+  {{-- @foreach ($subreddit->posts as $post)
     <div class="post">
       <div class="post-title">
         <a href="/r/{{$subreddit->name}}/comments/{{$post->permalink}}/{{$post->slug}}">{{$post->title}}</a>
@@ -17,6 +19,6 @@
         {{count($post->votes)}}
       </div>
     </div>
-  @endforeach
+  @endforeach --}}
 </div>
 @stop

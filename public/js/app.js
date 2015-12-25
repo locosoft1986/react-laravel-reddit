@@ -20766,13 +20766,15 @@ var LoginForm = require('./components/auth/login/LoginForm.jsx');
 var RegistrationForm = require('./components/auth/registration/RegistrationForm.jsx');
 var NewSubreddit = require('./components/subreddit/NewSubreddit.jsx');
 var NewPost = require('./components/subreddit/NewPost.jsx');
+var Subreddit = require('./components/subreddit/Subreddit.jsx');
 
 if (document.getElementById('loginForm')) ReactDOM.render(React.createElement(LoginForm, null), document.getElementById('loginForm'));
 if (document.getElementById('registrationForm')) ReactDOM.render(React.createElement(RegistrationForm, null), document.getElementById('registrationForm'));
 if (document.getElementById('newSubreddit')) ReactDOM.render(React.createElement(NewSubreddit, null), document.getElementById('newSubreddit'));
 if (document.getElementById('newPost')) ReactDOM.render(React.createElement(NewPost, null), document.getElementById('newPost'));
+if (document.getElementById('subredditPosts')) ReactDOM.render(React.createElement(Subreddit, null), document.getElementById('subredditPosts'));
 
-},{"./components/auth/login/LoginForm.jsx":184,"./components/auth/registration/RegistrationForm.jsx":189,"./components/subreddit/NewPost.jsx":193,"./components/subreddit/NewSubreddit.jsx":194,"react":158,"react-dom":2}],181:[function(require,module,exports){
+},{"./components/auth/login/LoginForm.jsx":184,"./components/auth/registration/RegistrationForm.jsx":189,"./components/subreddit/NewPost.jsx":193,"./components/subreddit/NewSubreddit.jsx":194,"./components/subreddit/Subreddit.jsx":196,"react":158,"react-dom":2}],181:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20903,7 +20905,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":197,"../../../reflux/AuthStore.jsx":198,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":185,"./UsernameField.jsx":186,"react":158,"reflux":175}],185:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":200,"../../../reflux/AuthStore.jsx":201,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":185,"./UsernameField.jsx":186,"react":158,"reflux":175}],185:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21048,7 +21050,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":197,"../../../services/HTTPService":199,"email-validator":1,"react":158}],188:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":200,"../../../services/HTTPService":202,"email-validator":1,"react":158}],188:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21185,7 +21187,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":197,"react":158}],189:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":200,"react":158}],189:[function(require,module,exports){
 var React = require('react');
 
 var EmailField = require('./EmailField.jsx');
@@ -21277,7 +21279,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":197,"../../../reflux/AuthStore.jsx":198,"../../AlertWrapper.jsx":182,"./EmailField.jsx":187,"./PasswordConfirmationField.jsx":188,"./UsernameField.jsx":190,"react":158,"reflux":175}],190:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":200,"../../../reflux/AuthStore.jsx":201,"../../AlertWrapper.jsx":182,"./EmailField.jsx":187,"./PasswordConfirmationField.jsx":188,"./UsernameField.jsx":190,"react":158,"reflux":175}],190:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21338,7 +21340,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":197,"../../../services/HTTPService":199,"react":158}],191:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":200,"../../../services/HTTPService":202,"react":158}],191:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21502,7 +21504,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../TokenField.jsx":183,"./BodyField.jsx":191,"./LinkField.jsx":192,"./SubredditField.jsx":195,"./TitleField.jsx":196,"react":158}],194:[function(require,module,exports){
+},{"../TokenField.jsx":183,"./BodyField.jsx":191,"./LinkField.jsx":192,"./SubredditField.jsx":197,"./TitleField.jsx":199,"react":158}],194:[function(require,module,exports){
 var React = require('react');
 
 var HTTP = require('../../services/HTTPService');
@@ -21626,7 +21628,112 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../reflux/AuthActions.jsx":197,"../../reflux/AuthStore.jsx":198,"../../services/HTTPService":199,"../AlertWrapper.jsx":182,"react":158,"reflux":175}],195:[function(require,module,exports){
+},{"../../reflux/AuthActions.jsx":200,"../../reflux/AuthStore.jsx":201,"../../services/HTTPService":202,"../AlertWrapper.jsx":182,"react":158,"reflux":175}],195:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {};
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "post" },
+      React.createElement(
+        "div",
+        { className: "post-title" },
+        React.createElement(
+          "a",
+          { href: "/r/" + this.props.subreddit + "/comments/" + this.props.permalink + "/" + this.props.slug },
+          this.props.title
+        )
+      ),
+      React.createElement(
+        "div",
+        { className: "post-meta" },
+        "submitted ",
+        React.createElement(
+          "span",
+          null,
+          this.props.date
+        ),
+        " by ",
+        React.createElement(
+          "a",
+          { href: "/u/" + this.props.user },
+          this.props.user
+        ),
+        " to ",
+        React.createElement(
+          "a",
+          { href: "/r/" + this.props.subreddit },
+          this.props.subreddit
+        )
+      ),
+      React.createElement(
+        "div",
+        { className: "post-score" },
+        "0"
+      )
+    );
+  }
+});
+
+},{"react":158}],196:[function(require,module,exports){
+var React = require('react');
+var Post = require('./Post.jsx');
+var SubscribeButton = require('./SubscribeButton.jsx');
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  getInitialState: function () {
+    return {
+      posts: []
+    };
+  },
+
+  componentWillMount: function () {
+    var vm = this;
+    $.ajax({
+      url: '/api/v1/getSubredditsPosts/' + document.getElementById('subreddit_name').value,
+      method: 'get',
+      dataType: 'json',
+      contentType: 'json',
+      success: function (response) {
+        vm.setState({
+          posts: response
+        });
+      }
+    });
+  },
+
+  render: function () {
+    var posts = this.state.posts.map(function (item) {
+      return React.createElement(Post, {
+        title: item.title,
+        date: item.created_at,
+        user: item.username,
+        subreddit: item.subreddit,
+        score: item.score,
+        permalink: item.permalink,
+        slug: item.slug,
+        key: item.permalink
+      });
+    });
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(SubscribeButton, { subreddit: document.getElementById('subreddit_name').value }),
+      posts
+    );
+  }
+});
+
+},{"./Post.jsx":195,"./SubscribeButton.jsx":198,"react":158}],197:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21664,7 +21771,69 @@ module.exports = React.createClass({
   }
 });
 
-},{"react":158}],196:[function(require,module,exports){
+},{"react":158}],198:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  getInitialState: function () {
+    return {
+      subscribed: false
+    };
+  },
+
+  componentWillMount: function () {
+    var vm = this;
+    $.ajax({
+      url: '/api/v1/isUserSubscribed/' + this.props.subreddit,
+      method: 'get',
+      dataType: 'json',
+      contentType: 'json',
+      success: function (response) {
+        vm.setState({
+          subscribed: response.message
+        });
+      }
+    });
+  },
+
+  onClick: function (e) {
+    var vm = this;
+    this.setState({
+      subscribed: !this.state.subscribed
+    });
+    $.ajax({
+      url: '/api/v1/subscribeUserToSubreddit/' + this.props.subreddit,
+      method: 'get',
+      dataType: 'json',
+      contentType: 'json',
+      success: function (response) {
+        vm.setState({
+          subscribed: response.message
+        });
+      }
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      'button',
+      { className: 'waves-effect waves-light btn blue', onClick: this.onClick },
+      this.state.subscribed ? React.createElement(
+        'span',
+        null,
+        'Unsubscribe'
+      ) : React.createElement(
+        'span',
+        null,
+        'Subscribe'
+      )
+    );
+  }
+});
+
+},{"react":158}],199:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21703,12 +21872,12 @@ module.exports = React.createClass({
   }
 });
 
-},{"react":158}],197:[function(require,module,exports){
+},{"react":158}],200:[function(require,module,exports){
 var Reflux = require('reflux');
 
 module.exports = Reflux.createActions(['getFormErrors', 'postFormErrors', 'clearFormError', 'postRegistration', 'postLogin']);
 
-},{"reflux":175}],198:[function(require,module,exports){
+},{"reflux":175}],201:[function(require,module,exports){
 var Reflux = require('reflux');
 var Actions = require('./AuthActions.jsx');
 
@@ -21801,7 +21970,7 @@ module.exports = Reflux.createStore({
   }
 });
 
-},{"../services/HTTPService":199,"./AuthActions.jsx":197,"reflux":175}],199:[function(require,module,exports){
+},{"../services/HTTPService":202,"./AuthActions.jsx":200,"reflux":175}],202:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
 

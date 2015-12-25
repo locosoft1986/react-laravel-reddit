@@ -33,6 +33,6 @@ class User extends Authenticatable
     }
 
     public function subreddits() {
-      return $this->hasMany('App\Subreddit');
+      return $this->belongsToMany('App\Subreddit');
     }
 }

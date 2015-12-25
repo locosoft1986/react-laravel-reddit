@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Subreddit;
+use Auth;
 
 class APIController extends Controller
 {
@@ -56,16 +57,60 @@ class APIController extends Controller
     }
 
     public function isUserSubscribed($subreddit) {
-      $sub = Subdoot::whereName($subreddit)->firstOrFail();
+      $sub = Subreddit::whereName($subreddit)->firstOrFail();
 
       if (Auth::user()->subreddits->contains($sub->id)) {
         return response()->json([
-          'message' => 'subscribed'
+          'message' => true
         ]);
       } else {
         return response()->json([
-          'message' => 'unsubscribed'
+          'message' => false
         ]);
+      }
+    }
+
+    public function add_user_date_subreddit($ar) {
+      $ar["username"] = $ar->user->username;
+      $ar["subreddit"] = $ar->subreddit->name;
+      return $ar;
+    }
+
+    public function getSubredditsPosts($subreddit) {
+      $sub = Subreddit::whereName($subreddit)->firstOrFail()->posts;
+
+      // Extract the data we want out of the posts for react to handle
+      $formatted_posts = array_map(function($ar) {
+        $post = [];
+        $post["username"] = $ar->user->username;
+        $post["subreddit"] = $ar->subreddit->name;
+        $post["title"] = $ar->title;
+        $post["slug"] = $ar->slug;
+        $post["permalink"] = $ar->permalink;
+        $post["link"] = $ar->link;
+        $post["body"] = $ar->body;
+        $post["created_at"] = \Carbon\Carbon::parse($ar->created_at)->diffForHumans();
+        return $post;
+      }, iterator_to_array($sub));
+
+      return response()->json($formatted_posts);
+    }
+
+    public function subscribeToSubreddit($subreddit) {
+      $user = Auth::user();
+
+      $sub = Subreddit::whereName($subreddit)->firstOrFail();
+
+      if ($user->subreddits->contains($sub->id)) {
+          $user->subreddits()->detach($sub->id);
+          return response()->json([
+            'message' => false
+          ]);
+      } else {
+          $user->subreddits()->attach($sub->id);
+          return response()->json([
+            'message' => true
+          ]);
       }
     }
 }

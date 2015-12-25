@@ -47,6 +47,7 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/logout', 'AuthenticateController@getLogout');
 
   Route::get('/r/{subreddit}', 'SubredditController@showSubreddit');
+  Route::get('/api/v1/getSubredditsPosts/{subreddit}', 'APIController@getSubredditsPosts');
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {
@@ -61,5 +62,5 @@ Route::group(['middleware' => ['web', 'auth']], function() {
   Route::get('/api/v1/getListOfSubreddits', 'APIController@getListOfSubreddits');
 
   Route::get('/api/v1/isUserSubscribed/{subreddit}', 'APIController@isUserSubscribed');
-  Route::post('/r/{subreddit}', 'SubredditController@subscribeToSubreddit');
+  Route::get('/api/v1/subscribeUserToSubreddit/{subreddit}', 'APIController@subscribeToSubreddit');
 });
