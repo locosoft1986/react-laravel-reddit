@@ -50,6 +50,8 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/api/v1/getSubredditsPosts/{subreddit}', 'APIController@getSubredditsPosts');
 
   Route::get('/api/v1/getFrontPagePosts', 'APIController@getFrontPagePosts');
+
+  Route::get('/api/v1/getSubredditMetaData/{subreddit}', 'APIController@getSubredditMetaData');
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {

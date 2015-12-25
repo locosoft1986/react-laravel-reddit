@@ -1,6 +1,5 @@
 var React = require('react');
-var Post = require('./Post.jsx');
-var SubscribeButton = require('./SubscribeButton.jsx');
+var Post = require('../Post.jsx');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -39,7 +38,6 @@ module.exports = React.createClass({
     });
     return (
       <div>
-        <SubscribeButton subreddit={document.getElementById('subreddit_name').value} />
         {posts}
       </div>
     );

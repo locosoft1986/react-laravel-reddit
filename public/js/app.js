@@ -20764,19 +20764,21 @@ var ReactDOM = require('react-dom');
 
 var LoginForm = require('./components/auth/login/LoginForm.jsx');
 var RegistrationForm = require('./components/auth/registration/RegistrationForm.jsx');
-var NewSubreddit = require('./components/subreddit/NewSubreddit.jsx');
-var NewPost = require('./components/subreddit/NewPost.jsx');
-var Subreddit = require('./components/subreddit/Subreddit.jsx');
-var FrontPage = require('./components/subreddit/FrontPage.jsx');
+var NewSubreddit = require('./components/reddit/forms/NewSubreddit.jsx');
+var NewPost = require('./components/reddit/forms/NewPost.jsx');
+var Subreddit = require('./components/reddit/subreddit/Subreddit.jsx');
+var Sidebar = require('./components/reddit/subreddit/Sidebar.jsx');
+var FrontPage = require('./components/reddit/FrontPage.jsx');
 
 if (document.getElementById('loginForm')) ReactDOM.render(React.createElement(LoginForm, null), document.getElementById('loginForm'));
 if (document.getElementById('registrationForm')) ReactDOM.render(React.createElement(RegistrationForm, null), document.getElementById('registrationForm'));
 if (document.getElementById('newSubreddit')) ReactDOM.render(React.createElement(NewSubreddit, null), document.getElementById('newSubreddit'));
 if (document.getElementById('newPost')) ReactDOM.render(React.createElement(NewPost, null), document.getElementById('newPost'));
 if (document.getElementById('subredditPosts')) ReactDOM.render(React.createElement(Subreddit, null), document.getElementById('subredditPosts'));
+if (document.getElementById('subredditSidebar')) ReactDOM.render(React.createElement(Sidebar, null), document.getElementById('subredditSidebar'));
 if (document.getElementById('frontPagePosts')) ReactDOM.render(React.createElement(FrontPage, null), document.getElementById('frontPagePosts'));
 
-},{"./components/auth/login/LoginForm.jsx":184,"./components/auth/registration/RegistrationForm.jsx":189,"./components/subreddit/FrontPage.jsx":192,"./components/subreddit/NewPost.jsx":194,"./components/subreddit/NewSubreddit.jsx":195,"./components/subreddit/Subreddit.jsx":197,"react":158,"react-dom":2}],181:[function(require,module,exports){
+},{"./components/auth/login/LoginForm.jsx":184,"./components/auth/registration/RegistrationForm.jsx":189,"./components/reddit/FrontPage.jsx":191,"./components/reddit/forms/NewPost.jsx":195,"./components/reddit/forms/NewSubreddit.jsx":196,"./components/reddit/subreddit/Sidebar.jsx":199,"./components/reddit/subreddit/Subreddit.jsx":200,"react":158,"react-dom":2}],181:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -20907,7 +20909,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":201,"../../../reflux/AuthStore.jsx":202,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":185,"./UsernameField.jsx":186,"react":158,"reflux":175}],185:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"../../../reflux/AuthStore.jsx":203,"../../AlertWrapper.jsx":182,"./PasswordField.jsx":185,"./UsernameField.jsx":186,"react":158,"reflux":175}],185:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21052,7 +21054,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":201,"../../../services/HTTPService":203,"email-validator":1,"react":158}],188:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"../../../services/HTTPService":204,"email-validator":1,"react":158}],188:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21189,7 +21191,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":201,"react":158}],189:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"react":158}],189:[function(require,module,exports){
 var React = require('react');
 
 var EmailField = require('./EmailField.jsx');
@@ -21281,7 +21283,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"../../../reflux/AuthActions.jsx":201,"../../../reflux/AuthStore.jsx":202,"../../AlertWrapper.jsx":182,"./EmailField.jsx":187,"./PasswordConfirmationField.jsx":188,"./UsernameField.jsx":190,"react":158,"reflux":175}],190:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"../../../reflux/AuthStore.jsx":203,"../../AlertWrapper.jsx":182,"./EmailField.jsx":187,"./PasswordConfirmationField.jsx":188,"./UsernameField.jsx":190,"react":158,"reflux":175}],190:[function(require,module,exports){
 var React = require('react');
 
 var Actions = require('../../../reflux/AuthActions.jsx');
@@ -21342,45 +21344,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../../reflux/AuthActions.jsx":201,"../../../services/HTTPService":203,"react":158}],191:[function(require,module,exports){
-var React = require('react');
-
-module.exports = React.createClass({
-  displayName: "exports",
-
-  getInitialState: function () {
-    return {
-      value: ""
-    };
-  },
-
-  onChange: function (e) {
-    this.setState({
-      value: e.target.value
-    });
-  },
-
-  render: function () {
-    return React.createElement(
-      "div",
-      { className: "input-field" },
-      React.createElement("textarea", {
-        id: "body",
-        className: "materialize-textarea",
-        value: this.state.value,
-        onChange: this.onChange,
-        name: "body"
-      }),
-      React.createElement(
-        "label",
-        { htmlFor: "body" },
-        "Body"
-      )
-    );
-  }
-});
-
-},{"react":158}],192:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"../../../services/HTTPService":204,"react":158}],191:[function(require,module,exports){
 var React = require('react');
 var Post = require('./Post.jsx');
 
@@ -21429,7 +21393,99 @@ module.exports = React.createClass({
   }
 });
 
-},{"./Post.jsx":196,"react":158}],193:[function(require,module,exports){
+},{"./Post.jsx":192,"react":158}],192:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {};
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "post" },
+      React.createElement(
+        "div",
+        { className: "post-title" },
+        React.createElement(
+          "a",
+          { href: "/r/" + this.props.subreddit + "/comments/" + this.props.permalink + "/" + this.props.slug },
+          this.props.title
+        )
+      ),
+      React.createElement(
+        "div",
+        { className: "post-meta" },
+        "submitted ",
+        React.createElement(
+          "span",
+          null,
+          this.props.date
+        ),
+        " by ",
+        React.createElement(
+          "a",
+          { href: "/u/" + this.props.user },
+          this.props.user
+        ),
+        " to ",
+        React.createElement(
+          "a",
+          { href: "/r/" + this.props.subreddit },
+          this.props.subreddit
+        )
+      ),
+      React.createElement(
+        "div",
+        { className: "post-score" },
+        "0"
+      )
+    );
+  }
+});
+
+},{"react":158}],193:[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement("textarea", {
+        id: "body",
+        className: "materialize-textarea",
+        value: this.state.value,
+        onChange: this.onChange,
+        name: "body"
+      }),
+      React.createElement(
+        "label",
+        { htmlFor: "body" },
+        "Body"
+      )
+    );
+  }
+});
+
+},{"react":158}],194:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21468,7 +21524,7 @@ module.exports = React.createClass({
   }
 });
 
-},{"react":158}],194:[function(require,module,exports){
+},{"react":158}],195:[function(require,module,exports){
 var React = require('react');
 
 var TitleField = require('./TitleField.jsx');
@@ -21476,7 +21532,7 @@ var LinkField = require('./LinkField.jsx');
 var BodyField = require('./BodyField.jsx');
 var SubredditField = require('./SubredditField.jsx');
 
-var TokenField = require('../TokenField.jsx');
+var TokenField = require('../../TokenField.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -21554,15 +21610,15 @@ module.exports = React.createClass({
   }
 });
 
-},{"../TokenField.jsx":183,"./BodyField.jsx":191,"./LinkField.jsx":193,"./SubredditField.jsx":198,"./TitleField.jsx":200,"react":158}],195:[function(require,module,exports){
+},{"../../TokenField.jsx":183,"./BodyField.jsx":193,"./LinkField.jsx":194,"./SubredditField.jsx":197,"./TitleField.jsx":198,"react":158}],196:[function(require,module,exports){
 var React = require('react');
 
-var HTTP = require('../../services/HTTPService');
-var Actions = require('../../reflux/AuthActions.jsx');
+var HTTP = require('../../../services/HTTPService');
+var Actions = require('../../../reflux/AuthActions.jsx');
 var Reflux = require('reflux');
-var Store = require('../../reflux/AuthStore.jsx');
+var Store = require('../../../reflux/AuthStore.jsx');
 
-var AlertWrapper = require('../AlertWrapper.jsx');
+var AlertWrapper = require('../../AlertWrapper.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -21678,64 +21734,142 @@ module.exports = React.createClass({
   }
 });
 
-},{"../../reflux/AuthActions.jsx":201,"../../reflux/AuthStore.jsx":202,"../../services/HTTPService":203,"../AlertWrapper.jsx":182,"react":158,"reflux":175}],196:[function(require,module,exports){
+},{"../../../reflux/AuthActions.jsx":202,"../../../reflux/AuthStore.jsx":203,"../../../services/HTTPService":204,"../../AlertWrapper.jsx":182,"react":158,"reflux":175}],197:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
   displayName: "exports",
 
   getInitialState: function () {
-    return {};
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
   },
 
   render: function () {
     return React.createElement(
       "div",
-      { className: "post" },
+      { className: "input-field" },
       React.createElement(
-        "div",
-        { className: "post-title" },
-        React.createElement(
-          "a",
-          { href: "/r/" + this.props.subreddit + "/comments/" + this.props.permalink + "/" + this.props.slug },
-          this.props.title
-        )
-      ),
-      React.createElement(
-        "div",
-        { className: "post-meta" },
-        "submitted ",
-        React.createElement(
-          "span",
-          null,
-          this.props.date
-        ),
-        " by ",
-        React.createElement(
-          "a",
-          { href: "/u/" + this.props.user },
-          this.props.user
-        ),
-        " to ",
-        React.createElement(
-          "a",
-          { href: "/r/" + this.props.subreddit },
-          this.props.subreddit
-        )
-      ),
-      React.createElement(
-        "div",
-        { className: "post-score" },
-        "0"
+        "select",
+        {
+          className: "browser-default",
+          id: "subreddit",
+          value: this.state.value,
+          onChange: this.onChange,
+          name: "subreddit_id",
+          required: true
+        },
+        this.props.options
       )
     );
   }
 });
 
-},{"react":158}],197:[function(require,module,exports){
+},{"react":158}],198:[function(require,module,exports){
 var React = require('react');
-var Post = require('./Post.jsx');
+
+module.exports = React.createClass({
+  displayName: "exports",
+
+  getInitialState: function () {
+    return {
+      value: ""
+    };
+  },
+
+  onChange: function (e) {
+    this.setState({
+      value: e.target.value
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "input-field" },
+      React.createElement("input", {
+        type: "text",
+        name: "title",
+        id: "title",
+        value: this.state.value,
+        onChange: this.onChange,
+        required: true
+      }),
+      React.createElement(
+        "label",
+        { htmlFor: "title" },
+        "Title"
+      )
+    );
+  }
+});
+
+},{"react":158}],199:[function(require,module,exports){
+var React = require('react');
 var SubscribeButton = require('./SubscribeButton.jsx');
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  getInitialState: function () {
+    return {
+      subscriber_count: "",
+      post_count: "",
+      description: ""
+    };
+  },
+
+  componentWillMount: function () {
+    var vm = this;
+    $.ajax({
+      url: '/api/v1/getSubredditMetaData/' + document.getElementById('subreddit_name').value,
+      method: 'get',
+      success: function (response) {
+        vm.setState({
+          subscriber_count: response.subscriber_count,
+          post_count: response.post_count,
+          description: response.description
+        });
+      }
+    });
+  },
+
+  render: function () {
+    return React.createElement(
+      'div',
+      { className: 'container z-depth-1' },
+      React.createElement(SubscribeButton, { subreddit: document.getElementById('subreddit_name').value }),
+      React.createElement(
+        'p',
+        null,
+        'Subscribers: ',
+        this.state.subscriber_count
+      ),
+      React.createElement(
+        'p',
+        null,
+        'Posts: ',
+        this.state.post_count
+      ),
+      React.createElement(
+        'p',
+        null,
+        this.state.description
+      )
+    );
+  }
+});
+
+},{"./SubscribeButton.jsx":201,"react":158}],200:[function(require,module,exports){
+var React = require('react');
+var Post = require('../Post.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -21777,51 +21911,12 @@ module.exports = React.createClass({
     return React.createElement(
       'div',
       null,
-      React.createElement(SubscribeButton, { subreddit: document.getElementById('subreddit_name').value }),
       posts
     );
   }
 });
 
-},{"./Post.jsx":196,"./SubscribeButton.jsx":199,"react":158}],198:[function(require,module,exports){
-var React = require('react');
-
-module.exports = React.createClass({
-  displayName: "exports",
-
-  getInitialState: function () {
-    return {
-      value: ""
-    };
-  },
-
-  onChange: function (e) {
-    this.setState({
-      value: e.target.value
-    });
-  },
-
-  render: function () {
-    return React.createElement(
-      "div",
-      { className: "input-field" },
-      React.createElement(
-        "select",
-        {
-          className: "browser-default",
-          id: "subreddit",
-          value: this.state.value,
-          onChange: this.onChange,
-          name: "subreddit_id",
-          required: true
-        },
-        this.props.options
-      )
-    );
-  }
-});
-
-},{"react":158}],199:[function(require,module,exports){
+},{"../Post.jsx":192,"react":158}],201:[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({
@@ -21883,51 +21978,12 @@ module.exports = React.createClass({
   }
 });
 
-},{"react":158}],200:[function(require,module,exports){
-var React = require('react');
-
-module.exports = React.createClass({
-  displayName: "exports",
-
-  getInitialState: function () {
-    return {
-      value: ""
-    };
-  },
-
-  onChange: function (e) {
-    this.setState({
-      value: e.target.value
-    });
-  },
-
-  render: function () {
-    return React.createElement(
-      "div",
-      { className: "input-field" },
-      React.createElement("input", {
-        type: "text",
-        name: "title",
-        id: "title",
-        value: this.state.value,
-        onChange: this.onChange,
-        required: true
-      }),
-      React.createElement(
-        "label",
-        { htmlFor: "title" },
-        "Title"
-      )
-    );
-  }
-});
-
-},{"react":158}],201:[function(require,module,exports){
+},{"react":158}],202:[function(require,module,exports){
 var Reflux = require('reflux');
 
 module.exports = Reflux.createActions(['getFormErrors', 'postFormErrors', 'clearFormError', 'postRegistration', 'postLogin']);
 
-},{"reflux":175}],202:[function(require,module,exports){
+},{"reflux":175}],203:[function(require,module,exports){
 var Reflux = require('reflux');
 var Actions = require('./AuthActions.jsx');
 
@@ -22020,7 +22076,7 @@ module.exports = Reflux.createStore({
   }
 });
 
-},{"../services/HTTPService":203,"./AuthActions.jsx":201,"reflux":175}],203:[function(require,module,exports){
+},{"../services/HTTPService":204,"./AuthActions.jsx":202,"reflux":175}],204:[function(require,module,exports){
 var Fetch = require('whatwg-fetch');
 var baseUrl = 'http://localhost:8000';
 

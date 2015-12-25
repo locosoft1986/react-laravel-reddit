@@ -5,7 +5,7 @@ var LinkField = require('./LinkField.jsx');
 var BodyField = require('./BodyField.jsx');
 var SubredditField = require('./SubredditField.jsx');
 
-var TokenField = require('../TokenField.jsx');
+var TokenField = require('../../TokenField.jsx');
 
 module.exports = React.createClass({
   getInitialState: function() {

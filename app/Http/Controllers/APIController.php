@@ -145,4 +145,16 @@ class APIController extends Controller
         return response()->json($merged);
       }
     }
+
+    public function getSubredditMetaData($subreddit) {
+      $sub = Subreddit::whereName($subreddit)->firstOrFail();
+
+      $data = [
+        "subscriber_count" => count($sub->users),
+        "post_count" => count($sub->posts),
+        "description" => $sub->description
+      ];
+
+      return response()->json($data);
+    }
 }

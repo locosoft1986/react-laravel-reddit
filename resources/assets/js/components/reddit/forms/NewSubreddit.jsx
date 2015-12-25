@@ -1,11 +1,11 @@
 var React = require('react');
 
-var HTTP = require('../../services/HTTPService');
-var Actions = require('../../reflux/AuthActions.jsx');
+var HTTP = require('../../../services/HTTPService');
+var Actions = require('../../../reflux/AuthActions.jsx');
 var Reflux = require('reflux');
-var Store = require('../../reflux/AuthStore.jsx');
+var Store = require('../../../reflux/AuthStore.jsx');
 
-var AlertWrapper = require('../AlertWrapper.jsx');
+var AlertWrapper = require('../../AlertWrapper.jsx');
 
 module.exports = React.createClass({
   mixins: [Reflux.listenTo(Store, 'onError')],
