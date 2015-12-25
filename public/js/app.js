@@ -21496,7 +21496,6 @@ module.exports = React.createClass({
       dataType: 'json',
       contentType: 'json',
       success: function (response) {
-        console.log(response);
         vm.setState({
           subreddits: response
         });

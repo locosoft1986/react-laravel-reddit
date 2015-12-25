@@ -127,7 +127,7 @@ class APIController extends Controller
         $subs = Auth::user()->subreddits;
         $posts = [];
         foreach ($subs as $sub) {
-          $posts = array_map(function($ar) {
+          array_push($posts, array_map(function($ar) {
             $post = [];
             $post["username"] = $ar->user->username;
             $post["subreddit"] = $ar->subreddit->name;
@@ -138,9 +138,11 @@ class APIController extends Controller
             $post["body"] = $ar->body;
             $post["created_at"] = \Carbon\Carbon::parse($ar->created_at)->diffForHumans();
             return $post;
-          }, iterator_to_array($sub->posts));
+          }, iterator_to_array($sub->posts)));
         }
-        return response()->json($posts);
+        // http://stackoverflow.com/questions/17041278/php-how-to-merge-arrays-inside-array
+        $merged = call_user_func_array('array_merge', $posts);
+        return response()->json($merged);
       }
     }
 }

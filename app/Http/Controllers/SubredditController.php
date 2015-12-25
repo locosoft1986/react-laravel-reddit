@@ -61,7 +61,7 @@ class SubredditController extends Controller
 
       Post::create($data);
 
-      return redirect('/r/' . Subreddit::find($request->subreddit_id)->firstOrFail()->name . '/comments/' . $data['permalink'] . '/' . $data['slug']);
+      return redirect('/r/' . Subreddit::whereId($request->subreddit_id)->firstOrFail()->name . '/comments/' . $data['permalink'] . '/' . $data['slug']);
     }
 
     // Random String function thanks to http://stackoverflow.com/questions/4356289/php-random-string-generator
