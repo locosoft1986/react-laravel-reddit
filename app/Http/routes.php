@@ -48,6 +48,8 @@ Route::group(['middleware' => ['web']], function () {
 
   Route::get('/r/{subreddit}', 'SubredditController@showSubreddit');
   Route::get('/api/v1/getSubredditsPosts/{subreddit}', 'APIController@getSubredditsPosts');
+
+  Route::get('/api/v1/getFrontPagePosts', 'APIController@getFrontPagePosts');
 });
 
 Route::group(['middleware' => ['web', 'auth']], function() {

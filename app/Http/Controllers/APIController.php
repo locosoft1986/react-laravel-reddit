@@ -70,10 +70,17 @@ class APIController extends Controller
       }
     }
 
-    public function add_user_date_subreddit($ar) {
-      $ar["username"] = $ar->user->username;
-      $ar["subreddit"] = $ar->subreddit->name;
-      return $ar;
+    public function extractDataFromPosts($ar) {
+      $post = [];
+      $post["username"] = $ar->user->username;
+      $post["subreddit"] = $ar->subreddit->name;
+      $post["title"] = $ar->title;
+      $post["slug"] = $ar->slug;
+      $post["permalink"] = $ar->permalink;
+      $post["link"] = $ar->link;
+      $post["body"] = $ar->body;
+      $post["created_at"] = \Carbon\Carbon::parse($ar->created_at)->diffForHumans();
+      return $post;
     }
 
     public function getSubredditsPosts($subreddit) {
@@ -111,6 +118,29 @@ class APIController extends Controller
           return response()->json([
             'message' => true
           ]);
+      }
+    }
+
+    //Need to figure out how to extract the callback for array_map into its own function
+    public function getFrontPagePosts() {
+      if (Auth::check()) {
+        $subs = Auth::user()->subreddits;
+        $posts = [];
+        foreach ($subs as $sub) {
+          $posts = array_map(function($ar) {
+            $post = [];
+            $post["username"] = $ar->user->username;
+            $post["subreddit"] = $ar->subreddit->name;
+            $post["title"] = $ar->title;
+            $post["slug"] = $ar->slug;
+            $post["permalink"] = $ar->permalink;
+            $post["link"] = $ar->link;
+            $post["body"] = $ar->body;
+            $post["created_at"] = \Carbon\Carbon::parse($ar->created_at)->diffForHumans();
+            return $post;
+          }, iterator_to_array($sub->posts));
+        }
+        return response()->json($posts);
       }
     }
 }
